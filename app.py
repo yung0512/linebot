@@ -53,7 +53,7 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 def get_answer(message_text):
 
-    url = "https://linebottest11.azurewebsites.net/qnamaker"
+    url = "https://linebottest11.azurewebsites.net/qnamaker/knowledgebases/f0c4a997-31b0-4459-843c-233645a700fa/generateAnswer"
     response = requests.post(url,json.dumps({'question':message_text}),
                             headers={
                                     'Content-Type':'application/json',
