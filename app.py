@@ -53,7 +53,7 @@ parser = WebhookParser(channel_secret)
 def get_answer(message_text):
 
     url = "https://linebottest11.azurewebsites.net/qnamaker"
-    response = request.post(url,json.dumps({'question':message_text}),
+    response = requests.post(url,json.dumps({'question':message_text}),
                             headers={
                                     'Content-Type':'application/json',
                                     'Ocp-Apim-Subscription-Key':'3fd131e6-6c93-4e74-89a3-d22bb47a5541'
