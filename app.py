@@ -136,7 +136,7 @@ def webhook_handler():
       #  answer = get_answer(event.message.text)
         try:
             
-             url = f"https://pixabay.com/images/search/{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
+             url = f"https://www.google.com/search?{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
              headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
            
              req = urllib.request.Request(url, headers = headers)
@@ -145,7 +145,7 @@ def webhook_handler():
              print(test)          
              print('fetch page finish')
     
-             pattern = 'img srcset="\S*\s\w*,'
+             pattern = 'img data-src="\S*"'
              img_list = []
      
              for match in re.finditer(pattern, str(conn.read())):
@@ -163,7 +163,7 @@ def webhook_handler():
                      preview_image_url=random_img_url
                  )
              )
-        except:
+         except:
              line_bot_api.reply_message(
                  event.reply_token,
                  TextSendMessage(text=event.message.text)
