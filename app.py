@@ -61,6 +61,7 @@ def get_answer(message_text):
                                      }
 
                               )
+    app.logger.info("test get_answer fcn"+response)
     data = response.json()
 
     try:
@@ -70,10 +71,10 @@ def get_answer(message_text):
         
         answer = data['answer']['0']['anwser']
 
-    return answer
+        return answer
     except Exception:
       
-    return "Error occurs when finding anwser"
+        return "Error occurs when finding anwser"
 
 
 @app.route("/callback", methods=["POST"])
