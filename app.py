@@ -3,6 +3,7 @@ import sys
 import json
 import requests
 import urllib
+import re
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
@@ -133,8 +134,10 @@ def webhook_handler():
       #      send_text_message(event.reply_token, "Not Entering any State")
       #  answer = get_answer(event.message.text)
         try:
+            
              url = f"https://pixabay.com/images/search/{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
-             headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; X64)AppleWebKit/537.36 (KHTML, like Gecko) Chorme/76.0.3809.132 Safari/537.36'}
+             headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
+           
              req = urllib.request.Request(url, headers = headers)
              conn = urllib.request.urlopen(req)
            
