@@ -6,7 +6,7 @@ from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 
 from fsm import TocMachine
 from utils import send_text_message
@@ -130,8 +130,44 @@ def webhook_handler():
         response = machine.advance(event)
       #  if response == False:
       #      send_text_message(event.reply_token, "Not Entering any State")
-        answer = get_answer(event.message.text)
-        send_text_message(event.reply_token,answer)
+      #  answer = get_answer(event.message.text)
+        try:
+             url = f"https://pixabay.com/images/search/{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
+             headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; X64)AppleWebKit/537.36 (KHTML, like Gecko) Chorme/76.0.3809.132 Safari/537.36'}
+             req = urllib.request.Request(url, headers = headers)
+             conn = urllib.request.urlopen(req)
+           
+             print('fetch page finish')
+    
+             pattern = 'img srcset="\S*\s\w*,'
+             img_list = []
+     
+             for match in re.finditer(pattern, str(conn.read())):
+                 img_list.append(match.group()[12:-3])
+
+             random_img_url = img_list[random.randint(0, len(img_list)+1)]
+             print('fetch img url finish')
+             print(rand_img_url)
+            
+        
+             line_bot_api.reply_message(
+                 event.reply_token,
+                 ImageSendMessage(
+                     original_content_url=random_img_url,
+                     preview_image_url=random_img_url
+                 )
+             )
+        except:
+             line_bot_api.reply_message(
+                 event.reply_token,
+                 TextSendMessage(text=event.message.text)
+              
+           )
+           pass
+
+
+             
+      #  send_text_message(event.reply_token,answer)
     return "OK"
 
 
