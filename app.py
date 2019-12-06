@@ -61,16 +61,16 @@ def get_answer(message_text):
                                      }
 
                               )
-    app.logger.info("test get_answer fcn"+response)
+    # app.logger.info("test get_answer fcn"+response)
     data = response.json()
-
+    
     try:
         if "error" in data:
           return data["error"]["message"]
         
         
         answer = data['answer']['0']['anwser']
-
+        app.logger.info("test "+answer)
         return answer
     except Exception:
       
