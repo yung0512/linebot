@@ -50,7 +50,27 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
+def get_answer(message_text):
 
+    url = "https://linebottest11.azurewebsites.net/qnamaker"
+    response = requests.post(url,json.dumps({'question':message_text}),
+                            headers={
+                                    'Content-Type':'application/json',
+                                    'Ocp-Apim-Subscription-Key':'3fd131e6-6c93-4e74-89a3-d22bb47a5541'
+                                     }
+
+                              )
+      data = response.json()
+
+     try:
+         if "error" in data:
+             return data["error"]["message"]
+         answer = data['answer']['0']['anwser']
+        
+         return answer
+     except Exception:
+      
+         return "Error occurs when finding anwser"
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -105,7 +125,8 @@ def webhook_handler():
         response = machine.advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
-
+        answer = get_answer(event.message.text)
+        send_text_message(event.reply_token,answer)
     return "OK"
 
 
