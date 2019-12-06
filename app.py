@@ -141,7 +141,8 @@ def webhook_handler():
            
              req = urllib.request.Request(url, headers = headers)
              conn = urllib.request.urlopen(req)
-           
+             test = req.full_url
+             print(test)          
              print('fetch page finish')
     
              pattern = 'img srcset="\S*\s\w*,'
