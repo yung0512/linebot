@@ -60,17 +60,18 @@ def get_answer(message_text):
                                      }
 
                               )
-      data = response.json()
+    data = response.json()
 
-     try:
-         if "error" in data:
-             return data["error"]["message"]
-         answer = data['answer']['0']['anwser']
+    try:
+        if "error" in data:
+          return data["error"]["message"]
+        answer = data['answer']['0']['anwser']
         
-         return answer
-     except Exception:
+    return answer
+    except Exception:
       
-         return "Error occurs when finding anwser"
+    return "Error occurs when finding anwser"
+
 
 @app.route("/callback", methods=["POST"])
 def callback():
