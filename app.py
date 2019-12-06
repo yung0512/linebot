@@ -136,7 +136,7 @@ def webhook_handler():
       #  answer = get_answer(event.message.text)
         try:
             
-             url = f"https://www.google.com/search?{urllib.parse.urlencode({'q':event.message.text})[2:]}/"
+             url = f"https://www.google.com/search?{urllib.parse.urlencode({'q':event.message.text})}/"
              headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
            
              req = urllib.request.Request(url, headers = headers)
