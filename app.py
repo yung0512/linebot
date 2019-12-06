@@ -57,7 +57,7 @@ def get_answer(message_text):
     response = requests.post(url,json.dumps({'question':message_text}),
                             headers={
                                     'Content-Type':'application/json',
-                                    'EndpointKey':'3fd131e6-6c93-4e74-89a3-d22bb47a5541'
+                                    'Authorization':'EndpointKey 3fd131e6-6c93-4e74-89a3-d22bb47a5541'
                                      }
 
                               )
