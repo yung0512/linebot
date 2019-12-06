@@ -65,9 +65,11 @@ def get_answer(message_text):
     try:
         if "error" in data:
           return data["error"]["message"]
+        
+        
         answer = data['answer']['0']['anwser']
 
-    return answer
+        return answer
     except Exception:
       
         return "Error occurs when finding anwser"
