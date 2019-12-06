@@ -66,11 +66,11 @@ def get_answer(message_text):
         if "error" in data:
           return data["error"]["message"]
         answer = data['answer']['0']['anwser']
-        
+
     return answer
     except Exception:
       
-    return "Error occurs when finding anwser"
+        return "Error occurs when finding anwser"
 
 
 @app.route("/callback", methods=["POST"])
