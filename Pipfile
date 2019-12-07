@@ -12,7 +12,6 @@ transitions = "==0.6.9"
 line-bot-sdk = "==1.14.0"
 Flask = "==1.0.2"
 requests = "*"
-json = "*"
 bs4 = "*"
 
 [requires]
