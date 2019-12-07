@@ -158,7 +158,7 @@ def webhook_handler():
              for d in image:
                   if d.fin('img'):
                          result = d.find('img')['src']
-                         print result
+                         print(result)
                          img_list.append(result)     
        
              random_img_url = img_list[random.randint(0, len(img_list)+1)]
