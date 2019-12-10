@@ -157,7 +157,7 @@ def webhook_handler():
             #     img_list.append(match.group()[14:-1])
 
              for d in image:
-                  if d.fin('img'):
+                  if d.find('img'):
                          result = d.find('img')['src']
                          print(result)
                          img_list.append(result)     
