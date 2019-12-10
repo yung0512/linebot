@@ -14,7 +14,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage, ImageSendMessage
 
 from fsm import TocMachine
-from utils import send_text_message
+from utils import send_text_message, send_image_url
 
 load_dotenv()
 
@@ -68,17 +68,17 @@ def get_answer(message_text):
                               )
     # app.logger.info("test get_answer fcn"+response)
     data = response.json()
-    
+
     try:
         if "error" in data:
           return data["error"]["message"]
-        
-        
+
+
         answer = data['answer']['0']['anwser']
         app.logger.info("test "+answer)
         return answer
     except Exception:
-      
+
         return "Error occurs when finding anwser"
 
 
@@ -132,59 +132,10 @@ def webhook_handler():
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-      #  response = machine.advance(event)
+        response = machine.advance(event)
         question = {'tbm':'isch','q':event.message.text};
-      #  if response == False:
-      #      send_text_message(event.reply_token, "Not Entering any State")
-      #  answer = get_answer(event.message.text)
-        try:
-            
-             url = f"https://www.google.com/search?{urllib.parse.urlencode(question)}/"
-             headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
-           
-             req = urllib.request.Request(url, headers = headers)
-             conn = urllib.request.urlopen(req)
-             test = req.full_url
-             print(test)          
-             print('fetch page finish')
-             rl = requests.get(test)
-             soup = BeautifulSoup(rl.text,'lxml')
-             image = soup.find_all('div')
-             pattern = 'img data-src="\S*"'
-             img_list = []
-     
-            # for match in re.finditer(pattern, str(conn.read())):
-            #     img_list.append(match.group()[14:-1])
-
-             for d in image:
-                  if d.find('img'):
-                         result = d.find('img')['src']
-                         print(result)
-                         img_list.append(result)     
-       
-            
-             random_img_url = img_list[0]
-             print('fetch img url finish')
-             print(random_img_url)
-            
-        
-             line_bot_api.reply_message(
-                 event.reply_token,
-                 ImageSendMessage(
-                     original_content_url=random_img_url,
-                     preview_image_url=random_img_url
-                 )
-             )
-        except:
-             line_bot_api.reply_message(
-                 event.reply_token,
-                 TextSendMessage(text=event.message.text)
-              
-           )
-        pass
 
 
-             
       #  send_text_message(event.reply_token,answer)
     return "OK"
 
