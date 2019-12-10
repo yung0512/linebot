@@ -2,6 +2,14 @@ from transitions.extensions import GraphMachine
 
 from utils import send_text_message
 
+import requests
+from bs4 import BeautifulSoup
+import urllib
+import lxml
+import re
+
+check = 0
+
 def findimage(event):
     try:
          question = {'tbm':'isch','q':event.message.text};
@@ -60,7 +68,7 @@ class TocMachine(GraphMachine):
 
     def is_going_to_state2(self, event):
         text = event.message.text
-        return text.lower() == event.message.text
+        return check==2
     def is_going_to_state3(self, event):
         text = event.message.text
         return text.lower() == "test"
@@ -71,7 +79,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("finding image state1")
-
+        check = 2
         reply_token = event.reply_token
         send_text_message(reply_token, "please enter what image want to find")
 
