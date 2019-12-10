@@ -47,7 +47,7 @@ def findimage(event):
          )
              pass
 
-   return
+             return
 
 
 class TocMachine(GraphMachine):
