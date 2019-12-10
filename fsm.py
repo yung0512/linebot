@@ -87,7 +87,7 @@ class TocMachine(GraphMachine):
             print("Leaving state3")
 
 
-    def on_exit_state1(self):
+    def on_exit_state1(self,event):
         print("Leaving state1")
 
     def on_enter_state2(self, event):
