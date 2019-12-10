@@ -148,20 +148,21 @@ def webhook_handler():
              print(test)          
              print('fetch page finish')
              rl = requests.get(test)
-            # soup = BeautifulSoup(rl.text,'lxml')
-            # image = soup.find_all('div')
+             soup = BeautifulSoup(rl.text,'lxml')
+             image = soup.find_all('div')
              pattern = 'img data-src="\S*"'
              img_list = []
      
-             for match in re.finditer(pattern, str(conn.read())):
-                 img_list.append(match.group()[14:-1])
+            # for match in re.finditer(pattern, str(conn.read())):
+            #     img_list.append(match.group()[14:-1])
 
-            # for d in image:
-            #      if d.fin('img'):
-            #             result = d.find('img')['src']
-            #             print(result)
-            #             img_list.append(result)     
+             for d in image:
+                  if d.fin('img'):
+                         result = d.find('img')['src']
+                         print(result)
+                         img_list.append(result)     
        
+            
              random_img_url = img_list[random.randint(0, len(img_list)+1)]
              print('fetch img url finish')
              print(rand_img_url)
