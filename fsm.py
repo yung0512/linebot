@@ -38,7 +38,7 @@ def findimage(event):
         #     )
         # )
          send_image_url(event.reply_token, random_img_url)
-      except:
+     except:
            line_bot_api.reply_message(
                event.reply_token,
                TextSendMessage(text=event.message.text)
@@ -65,7 +65,7 @@ class TocMachine(GraphMachine):
 
     def on_enter_state3(self, event):
         print("test state3")
-        self.go_back()       
+        self.go_back()
 
     def on_enter_state1(self, event):
         print("finding image state1")
