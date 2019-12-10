@@ -28,7 +28,7 @@ machine = TocMachine(
             "dest": "state1",
             "conditions": "is_going_to_state1",
         },
-        
+
         {
             "trigger": "advance",
             "source": "state1",
@@ -58,30 +58,6 @@ if channel_access_token is None:
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
-def get_answer(message_text):
-
-    url = "https://linebottest11.azurewebsites.net/qnamaker/knowledgebases/f0c4a997-31b0-4459-843c-233645a700fa/generateAnswer"
-    response = requests.post(url,json.dumps({'question':message_text}),
-                            headers={
-                                    'Content-Type':'application/json',
-                                    'Authorization':'EndpointKey 3fd131e6-6c93-4e74-89a3-d22bb47a5541'
-                                     }
-
-                              )
-    # app.logger.info("test get_answer fcn"+response)
-    data = response.json()
-
-    try:
-        if "error" in data:
-          return data["error"]["message"]
-
-
-        answer = data['answer']['0']['anwser']
-        app.logger.info("test "+answer)
-        return answer
-    except Exception:
-
-        return "Error occurs when finding anwser"
 
 
 @app.route("/callback", methods=["POST"])

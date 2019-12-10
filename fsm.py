@@ -59,7 +59,6 @@ def findimage(event):
 
 
 class TocMachine(GraphMachine):
-    check = 0
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
@@ -80,7 +79,6 @@ class TocMachine(GraphMachine):
 
     def on_enter_state1(self, event):
         print("finding image state1")
-        check = 2
         reply_token = event.reply_token
         send_text_message(reply_token, "please enter what image want to find")
         #self.go_back()
