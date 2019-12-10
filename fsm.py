@@ -69,7 +69,7 @@ class TocMachine(GraphMachine):
 
     def is_going_to_state2(self, event):
         text = event.message.text
-        return check==2
+        return text.lower() == event.message.text
     def is_going_to_state3(self, event):
         text = event.message.text
         return text.lower() == "test"
