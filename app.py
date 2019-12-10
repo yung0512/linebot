@@ -165,7 +165,7 @@ def webhook_handler():
             
              random_img_url = img_list[random.randint(0, len(img_list)+1)]
              print('fetch img url finish')
-             print(rand_img_url)
+             print(result)
             
         
              line_bot_api.reply_message(
