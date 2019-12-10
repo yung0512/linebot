@@ -8,7 +8,6 @@ import urllib
 import lxml
 import re
 
-check = 0
 
 def findimage(event):
     try:
