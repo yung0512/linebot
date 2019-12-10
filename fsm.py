@@ -1,7 +1,5 @@
 from transitions.extensions import GraphMachine
-
 from utils import send_text_message, send_image_url
-
 import requests
 from bs4 import BeautifulSoup
 import urllib
@@ -48,7 +46,7 @@ def findimage(event):
 
     except:
             send_text_message(event.reply_token,event.message.text)
-             pass
+            pass
 
              return
 
