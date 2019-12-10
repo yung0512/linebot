@@ -35,7 +35,12 @@ machine = TocMachine(
             "dest": "state2",
             "conditions": "is_going_to_state2",
         },
-
+        {
+            "trigger": "advance",
+            "source": "user",
+            "dest": "state4",
+            "conditions": "is_going_to_state4",
+        },
         {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
     ],
     initial="user",
@@ -73,6 +78,8 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
+
+    
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
