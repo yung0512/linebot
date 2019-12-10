@@ -59,6 +59,7 @@ def findimage(event):
 
 
 class TocMachine(GraphMachine):
+    check = 0
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
