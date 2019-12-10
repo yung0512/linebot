@@ -133,12 +133,13 @@ def webhook_handler():
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
+        question = {'tbm':'isch','q':event.message.text};
       #  if response == False:
       #      send_text_message(event.reply_token, "Not Entering any State")
       #  answer = get_answer(event.message.text)
         try:
             
-             url = f"https://www.google.com/search?{urllib.parse.urlencode({'q':event.message.text})}/"
+             url = f"https://www.google.com/search?{urllib.parse.urlencode(question)}/"
              headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}
            
              req = urllib.request.Request(url, headers = headers)
@@ -147,18 +148,18 @@ def webhook_handler():
              print(test)          
              print('fetch page finish')
              rl = requests.get(test)
-             soup = BeautifulSoup(rl.text,'lxml')
-             image = soup.find_all('div')
-             pattern = 'img'
+            # soup = BeautifulSoup(rl.text,'lxml')
+            # image = soup.find_all('div')
+             pattern = 'img data-src="\S*"'
              img_list = []
      
-            # for match in re.finditer(pattern, str(conn.read())):
-            #     img_list.append(match.group()[12:-3])
+             for match in re.finditer(pattern, str(conn.read())):
+                 img_list.append(match.group()[14:-1])
 
-             for d in image:
-                  if d.fin('img'):
-                         result = d.find('img')['src']
-                         print(result)
+            # for d in image:
+            #      if d.fin('img'):
+            #             result = d.find('img')['src']
+            #             print(result)
                          img_list.append(result)     
        
              random_img_url = img_list[random.randint(0, len(img_list)+1)]
