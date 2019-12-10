@@ -163,16 +163,16 @@ def webhook_handler():
                          img_list.append(result)     
        
             
-             random_img_url = img_list[random.randint(0, len(img_list)+1)]
+             random_img_url = img_list[0]
              print('fetch img url finish')
-             print(result)
+             print(random_img_url)
             
         
              line_bot_api.reply_message(
                  event.reply_token,
                  ImageSendMessage(
-                     original_content_url=result,
-                     preview_image_url=result
+                     original_content_url=random_img_url,
+                     preview_image_url=random_img_url
                  )
              )
         except:
