@@ -123,6 +123,7 @@ class TocMachine(GraphMachine):
         except:
              send_text_message(event.reply_token,"sorry have some errors!!")
              self.go_back()
+             pass
 
     def on_enter_state1(self, event):
         print("finding image state1")
@@ -150,5 +151,5 @@ class TocMachine(GraphMachine):
         print("Leaving state2")
 
 
-    def on_exit_state4(self,event):
+    def on_exit_state4(self):
           print("Leaving state4")
