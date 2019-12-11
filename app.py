@@ -20,7 +20,7 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2","state3"],
+    states=["user", "state1", "state2","state3","state4"],
     transitions=[
         {
             "trigger": "advance",
