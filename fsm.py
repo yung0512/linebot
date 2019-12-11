@@ -103,7 +103,7 @@ class TocMachine(GraphMachine):
 
     def is_going_to_state3(self, event):
         text = event.message.text
-        return text.lower() == "test"
+        return text.lower() == "weather"
 
     def is_going_to_state4(self, event):
         text = event.message.text
@@ -111,14 +111,18 @@ class TocMachine(GraphMachine):
 
     def on_enter_state3(self, event):
         print("enter location")
+        send_text_message(event.reply_token,"enter location")
         #self.go_back()
 
     def on_enter_state4(self, event):
         print("test state4")
         id = wheather[event.message.text]
-        answer = getweather(id)
-        send_text_message(event.reply_token,answer)
-        self.go_back()
+        try:
+             answer = getweather(id)
+             send_text_message(event.reply_token,answer)
+        except:
+             send_text_message(event.reply_token,"sorry have some errors!!")
+             self.go_back()
 
     def on_enter_state1(self, event):
         print("finding image state1")
