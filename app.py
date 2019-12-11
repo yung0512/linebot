@@ -38,15 +38,22 @@ machine = TocMachine(
         {
             "trigger": "advance",
             "source": "user",
+            "dest": "state3",
+            "conditions": "is_going_to_state3",
+        },
+        {
+            "trigger": "advance",
+            "source": "state3",
             "dest": "state4",
             "conditions": "is_going_to_state4",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {"trigger": "go_back", "source": ["state1", "state2","state4"], "dest": "user"},
     ],
     initial="user",
     auto_transitions=False,
     show_conditions=True,
 )
+
 
 app = Flask(__name__, static_url_path="")
 
@@ -79,7 +86,7 @@ def callback():
         abort(400)
 
 
-    
+
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
@@ -96,6 +103,8 @@ def callback():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_handler():
+
+
     signature = request.headers["X-Line-Signature"]
     # get request body as text
     body = request.get_data(as_text=True)
@@ -106,6 +115,10 @@ def webhook_handler():
         events = parser.parse(body, signature)
     except InvalidSignatureError:
         abort(400)
+
+
+    if events isinstance(event,FollowEvent):
+
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:

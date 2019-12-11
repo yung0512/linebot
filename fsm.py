@@ -5,6 +5,49 @@ from bs4 import BeautifulSoup
 import urllib
 import lxml
 import re
+#import urllib2
+#import pprint
+
+wheather = {'台北市':1,'高雄市':2,'基隆':3,'台北':4,'桃園':5,'新竹':6
+             ,'苗栗':7,'台中':8,'彰化':9,'南投':10,'雲林':11,'嘉義':12
+            ,'台南':13,'高雄':14,'屏東':15,'恆春':16,'宜蘭':17,'花蓮':18
+            ,'台東':19,'澎湖':20,'金門':21,'馬祖':22}
+
+
+def getweather(id):
+
+    result=''
+
+    url='http://twweatherapi.appspot.com/forecast?location='+id+'&output=json'
+
+    req=urllib.request.urlopen(url)
+
+    chiadict=eval(req.read())
+
+    result=result+chiadict['result']['locationName']+' 天氣\n'
+
+    result+="="*10
+
+    result+="\n"
+
+    for d in chiadict['result']['items']:
+
+        result+=''+d['title']+'\n'
+
+        result+='時間 '+d['time']+'\n'
+
+        result+='天氣狀況 '+d['description']+'\n'
+
+        result+='溫度 '+d['temperature']+' 度'+'\n'
+
+        result+='降雨機率 '+d['rain']+' %\n'
+
+        result+='-'*10
+
+        result+="\n"
+
+    return result
+
 
 
 def findimage(event):
@@ -34,14 +77,6 @@ def findimage(event):
          print('fetch img url finish')
          print(random_img_url)
 
-
-         #line_bot_api.reply_message(
-        #     event.reply_token,
-        #     ImageSendMessage(
-        #         original_content_url=random_img_url,
-        #         preview_image_url=random_img_url
-        #     )
-        # )
          send_image_url(event.reply_token, random_img_url)
 
     except:
@@ -62,12 +97,24 @@ class TocMachine(GraphMachine):
     def is_going_to_state2(self, event):
         text = event.message.text
         return text.lower() == event.message.text
+
     def is_going_to_state3(self, event):
         text = event.message.text
         return text.lower() == "test"
 
+    def is_going_to_state4(self, event):
+        text = event.message.text
+        return text.lower() == event.message.text
+
     def on_enter_state3(self, event):
-        print("test state3")
+        print("enter location")
+        #self.go_back()
+
+    def on_enter_state4(self, event):
+        print("test state4")
+        id = wheather[event.message.text]
+        answer = getweather(id)
+        send_text_message(event.reply_token,answer)
         self.go_back()
 
     def on_enter_state1(self, event):
@@ -76,7 +123,7 @@ class TocMachine(GraphMachine):
         send_text_message(reply_token, "please enter what image want to find")
         #self.go_back()
 
-    def on_exit_state3(self):
+    def on_exit_state3(self,event):
             print("Leaving state3")
 
 
@@ -94,3 +141,7 @@ class TocMachine(GraphMachine):
 
     def on_exit_state2(self):
         print("Leaving state2")
+
+
+    def on_exit_state4(self,event):
+          print("Leaving state4")
