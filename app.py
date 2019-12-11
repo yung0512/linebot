@@ -117,9 +117,6 @@ def webhook_handler():
         abort(400)
 
 
-    if events isinstance(event,FollowEvent):
-
-
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         if not isinstance(event, MessageEvent):
